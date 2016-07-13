@@ -48,7 +48,7 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 /**
- * Created by a592282 on 12-07-2016.
+ * Created by Nithin Devang on 12-07-2016.
  */
 public class Login implements TestCase {
 
@@ -62,10 +62,7 @@ public class Login implements TestCase {
         driver.get("http://localhost:8881/demo/");
         invalidPassword();
         tryLogin(); //right username n password
-
-        //DriverSupport.configure();
         return automiumLog;
-        //return ExecutionStatus.SUCCESS;
     }
 
     public boolean login() {
@@ -119,4 +116,36 @@ public class Login implements TestCase {
 
 ```
 
+7. Similar way create testcase classes for various scenarios.
 
+#Running test cases.
+
+1. Create testcase.xml file in classpath.
+    example:
+```
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<testCases>
+    <testCase id="login"  class="net.atos.demo.testcases.Login"/>
+    <testCase id="homepage"  class="net.atos.demo.testcases.HomePage">
+        <pre id="login"/>
+    </testCase>
+    <testCase id="logout" class="net.atos.demo.testcases.Logout">
+        <pre id="login"/>
+    </testCase>
+</testCases>
+
+```
+2. Specify test classes in the sequential order it need to be executed.
+3. <pre> tag tells it is mandatory to run this testcase before running the current testcase.
+4. final.test.result.path should be set in system property with the path where report should be generated.
+5. write a mail method (or anything similar) and pass this xml file to new object of AutomiumExecutor.run(File) method.
+example:
+```java
+public static void main(String[] args) throws Exception {
+        PropertyReader.load();
+        URL url = Thread.currentThread().getContextClassLoader().getResource("testcase.xml");
+        File file = new File(url.toURI());
+        AutomiumExecutor automiumExecutor = new AutomiumExecutor();
+        automiumExecutor.run(file);
+    }
+```

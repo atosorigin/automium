@@ -3,7 +3,7 @@ package com.nithind.automium.utils;
 import java.util.Properties;
 
 /**
- * Created by A592282 on 26-11-2015.
+ * Created by Nithin Devang on 26-11-2015.
  */
 public class PropertyConfig {
     private static Properties properties;

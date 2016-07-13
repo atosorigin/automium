@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by a592282 on 25-02-2015.
+ * Created by Nithin Devang on 25-02-2015.
  */
 public class AutomiumLog {
 
@@ -45,6 +45,18 @@ public class AutomiumLog {
 
     public void warn(String message, String optionalMessage) {
         log(message, optionalMessage, "warning");
+    }
+
+    public void success(String message) {
+        log(message, "", "success");
+    }
+
+    public void fail(String message) {
+        log(message, "", "failure");
+    }
+
+    public void warn(String message) {
+        log(message, "", "warning");
     }
 
     public boolean log(String message, String optionalMessage, String type) {

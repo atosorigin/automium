@@ -1,7 +1,7 @@
 package com.nithind.automium.exceptions;
 
 /**
- * Created by a592282 on 12-07-2016.
+ * Created by Nithin Devang on 12-07-2016.
  */
 public class NotAutomiumTestCaseException extends Exception {
     public NotAutomiumTestCaseException() {

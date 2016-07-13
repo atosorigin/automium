@@ -18,60 +18,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by a592282.
+ * Created by Nithin Devang.
  */
 
 public class AutomiumExecutor {
 
-    /*private static List<XMLTestCase> executedTestCase = new ArrayList<XMLTestCase>();*/
     private static List<String> executedTestCase = new ArrayList<String>();
 
-  /*  @Autowired
-    Runner runner;*/
-
-
-    public static void main(String[] args) throws JAXBException {
-        XMLTestCases testCases = new XMLTestCases();
-        testCases.setTestCases(new ArrayList<XMLTestCase>());
-        //Create two testCases
-        XMLTestCase testCase1 = new XMLTestCase();
-        testCase1.setId("1");
-        testCase1.setExecutionOrder(1);
-        testCase1.setTestClassName("com.atos.gcs.testcase1");
-
-        XMLTestCase testCase2 = new XMLTestCase();
-        testCase2.setTestClassName("com.atos.gcs.login");
-        testCase2.setId("1");
-        testCase2.setExecutionOrder(2);
-        List<PreReqTestCase> testcaselist = new ArrayList<PreReqTestCase>();
-
-        PreReqTestCase pre = new PreReqTestCase();
-        pre.setId("1");
-        pre.setTestClassName("test class name");
-        testcaselist.add(pre);
-
-        PreReqTestCase pre2 = new PreReqTestCase();
-        pre2.setId("2");
-        pre2.setTestClassName("test class name 2");
-        testcaselist.add(pre2);
-
-        //testCase2.setNotPreTestCases(testcaselist);
-        testCase2.setPreTestCases(testcaselist);
-
-        //Add the testCases in list
-        testCases.getTestCases().add(testCase1);
-        testCases.getTestCases().add(testCase2);
-        JAXBContext jaxbContext = JAXBContext.newInstance(XMLTestCases.class);
-        Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-
-        jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
-        //Marshal the testCases list in console
-        jaxbMarshaller.marshal(testCases, System.out);
-
-        //Marshal the testCases list in file
-        jaxbMarshaller.marshal(testCases, new File("c:/temp/testCases.xml"));
-    }
 
     public void run(File xmlPath) throws Exception {
         try {

@@ -1,7 +1,7 @@
 package com.nithind.automium.exceptions;
 
 /**
- * Created by a592282 on 13-07-2016.
+ * Created by Nithin Devang on 13-07-2016.
  */
 public class DuplicateIdException extends Exception {
     public DuplicateIdException() {
