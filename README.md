@@ -17,11 +17,12 @@ Automium is an automation testing framework built on top of Selenium. Test cases
 		
 4.Create test case for each use case example Login.java for login functionality testing. impliment com.nithind.automium.TestCase and overide methods.
 			eg.
+```java
 			public class Login implements TestCase {
 				AutomiumLog automiumLog = new AutomiumLog(this); //Initiate automiumLog
 				WebDriver driver;
 				@Override
 				public AutomiumLog run() {
 				}
-			}
+			}```
 
