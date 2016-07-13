@@ -136,9 +136,9 @@ public class Login implements TestCase {
 
 ```
 2. Specify test classes in the sequential order it need to be executed.
-3. <pre> tag tells it is mandatory to run this testcase before running the current testcase.
+3. pre tag tells it is mandatory to run this testcase before running the current testcase.
 4. final.test.result.path should be set in system property with the path where report should be generated.
-5. write a mail method (or anything similar) and pass this xml file to new object of AutomiumExecutor.run(File) method.
+5. write a main method (or anything similar) and pass this xml file to new object of AutomiumExecutor.run(File) method.
 example:
 ```java
 public static void main(String[] args) throws Exception {
@@ -149,3 +149,4 @@ public static void main(String[] args) throws Exception {
         automiumExecutor.run(file);
     }
 ```
+6. This will run all the test cases sequentially.
