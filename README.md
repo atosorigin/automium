@@ -29,9 +29,11 @@ Automium is an automation testing framework built on top of Selenium. Test cases
 				}
 			}
 ```
-4.Using global selenium web driver do all the activities. (doc http://www.seleniumhq.org/docs/03_webdriver.jsp#introducing-webdriver)
+4.Using global selenium web driver do all the activities. (doc http://www.seleniumhq.org/docs/03_webdriver.jsp#introducing-webdriver).
 
-5. Full example of login class.
+5. automiumLog.fail(String, String), automiumLog.warn(String, String), automiumLog.success(String, String) is used to log failure, warning or success scenarios.
+
+6. Full example of login class.
 ```java
 package net.atos.demos.testcases;
 
