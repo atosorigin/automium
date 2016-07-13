@@ -14,6 +14,7 @@ Automium is an automation testing framework built on top of Selenium. Test cases
             <version>1.0-SNAPSHOT</version>
         </dependency>
 		```
+		
 3.  create main class method and initialize test files. also set properties 
 		//todo need to be updated.
 		
