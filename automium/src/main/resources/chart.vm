@@ -1,0 +1,162 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+	
+
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1.0', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Result');
+        data.addColumn('number', 'Count');
+        data.addRows([
+          ['Success', $success],
+          ['Failures', $failure],
+		  ['Warnings', $warning]
+        ]);
+
+        // Set chart options
+        var options = {'title':'Test Result',
+					slices: {
+						0: {color:'green' },
+						1: {color:'red', offset: 0.2 },
+						2: {color:'#FFBF00'},
+					},
+                       'width':400,
+                       'height':300};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+<title>Automium Result</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<style type="text/css">
+body {
+	margin:0;
+	padding:20px;
+	font:13px "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif;
+	}
+
+/* ---- Some Resets ---- */
+
+p,
+table, caption, td, tr, th {
+	margin:0;
+	padding:0;
+	font-weight:normal;
+	}
+
+/* ---- Paragraphs ---- */
+
+p {
+	margin-bottom:15px;
+	}
+
+/* ---- Table ---- */
+
+table {
+	border-collapse:collapse;
+	margin-bottom:15px;
+	width:90%;
+	}
+
+	caption {
+		text-align:left;
+		font-size:15px;
+		padding-bottom:10px;
+		}
+
+	table td,
+	table th {
+		padding:5px;
+		border:1px solid #fff;
+		border-width:0 1px 1px 0;
+		}
+
+	thead th {
+		background:#91c5d4;
+		}
+
+		thead th[colspan],
+		thead th[rowspan] {
+			background:#66a9bd;
+			}
+
+	tbody th,
+	tfoot th {
+		text-align:left;
+		background:#91c5d4;
+		}
+
+	tbody td,
+	tfoot td {
+		text-align:center;
+		}
+
+	tfoot th {
+		background:#b0cc7f;
+		}
+
+	tfoot td {
+		background:#d7e1c5;
+		font-weight:bold;
+		}
+
+	tbody tr.odd td {
+		background:#bcd9e1;
+		}
+
+td {
+   color: #FFFFCC;
+}
+table {
+  width:25%;
+  border-collapse:collapse;
+}
+table th{
+   background-color: #0777E7;
+}
+
+
+tr.Success td {
+  background-color: green;
+}
+tr.Failure {
+  background-color: red;
+}
+
+tr.Warning {
+  background-color: #FFBF00;
+}
+
+.test_result_holder {
+ background-color: #E4E4E4;
+}
+</style>
+</head>
+
+<body>
+<div id="top"></div>
+<div id="chart_div"></div>
+<table>
+ <tr class="Success"> <th>Message</td><th>Additional Comments</td><th>Status</td></tr>
+ $resultTable
+</table>
+<hr  />
+<h1>Individual Test Results Below</h1>
+$classLogsString
+</body>
+</html>

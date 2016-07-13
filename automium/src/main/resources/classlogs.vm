@@ -1,0 +1,36 @@
+    <script type="text/javascript">
+      google.setOnLoadCallback(drawChart_$classname);
+
+      function drawChart_$classname() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Result');
+        data.addColumn('number', 'Count');
+        data.addRows([
+          ['Success', $success],
+          ['Failures', $failure],
+		  ['Warnings', $warning]
+        ]);
+
+        // Set chart options
+        var options = {'title':'Test Result',
+					slices: {
+						0: {color:'green' },
+						1: {color:'red', offset: 0.2 },
+						2: {color:'#FFBF00'},
+					},
+					backgroundColor: '#E4E4E4',
+                       'width':400,
+                       'height':300};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div_$classname'));
+        chart.draw(data, options);
+      }
+    </script>
+<div id="chart_div_$classname"></div>
+<table>
+ <tr class="Success"> <th>Message</td><th>Additional info</td><th>Status</td></tr>
+ $resultTable
+</table>
