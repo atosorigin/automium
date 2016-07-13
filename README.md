@@ -33,7 +33,7 @@ Automium is an automation testing framework built on top of Selenium. Test cases
 
 5. Full example of login class.
 ```java
-package net.atos.gcs.testcases;
+package net.atos.demos.testcases;
 
 import com.nithind.automium.AutomiumLog;
 import com.nithind.automium.DriverSupport;
@@ -57,7 +57,7 @@ public class Login implements TestCase {
     @Override
     public AutomiumLog run() {
         driver = DriverSupport.getDriver();
-        driver.get("http://localhost:8881/CardSTOP-admin/");
+        driver.get("http://localhost:8881/demo/");
         invalidPassword();
         tryLogin(); //right username n password
 
@@ -69,18 +69,17 @@ public class Login implements TestCase {
     public boolean login() {
         try {
             WebElement loginTestBox = driver.findElement(By.id("login"));
-            loginTestBox.sendKeys(PropertyConfig.getProperty("form.login.username"));
+            loginTestBox.sendKeys("right_username");
             WebElement passwordTestBox = driver.findElement(By.id("password"));
-            passwordTestBox.sendKeys(PropertyConfig.getProperty("form.login.password"));
+            passwordTestBox.sendKeys("right_password");
             passwordTestBox.submit();
-            if(driver.getCurrentUrl().contains("cardstop/home")) {
+            if(driver.getCurrentUrl().contains("demo/home")) {
                 automiumLog.success("Successfully logged in", "Able to determine home url");
                 return true;
             }  else {
                 automiumLog.fail("Unable to login", "Could not determine home page URL");
                 return false;
             }
-            //WebElement submitButton = driver.findElement(By.id("bthp"));
         } catch(Exception e) {
             automiumLog.fail("Unable to login", "");
             return false;
@@ -90,11 +89,11 @@ public class Login implements TestCase {
     public boolean invalidPassword() {
         try {
             WebElement loginTestBox = driver.findElement(By.id("login"));
-            loginTestBox.sendKeys(PropertyConfig.getProperty("form.login.username"));
+            loginTestBox.sendKeys("right_username");
             WebElement passwordTestBox = driver.findElement(By.id("password"));
-            passwordTestBox.sendKeys("dummy password");
+            passwordTestBox.sendKeys("wrong password");
             passwordTestBox.submit();
-            if(!driver.getCurrentUrl().contains("cardstop/home") && driver.getCurrentUrl().contains("cardstop/login")) {
+            if(!driver.getCurrentUrl().contains("demo/home") && driver.getCurrentUrl().contains("demo/login")) {
                 automiumLog.success("Didnot login to dashboard with wrong password", "Was able to determine login URL");
             }  else {
                 automiumLog.fail("Goes to login with invalid username", "Username : dummyUsername");
