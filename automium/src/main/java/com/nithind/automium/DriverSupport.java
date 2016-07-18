@@ -19,13 +19,25 @@ public class DriverSupport {
 
     }
 
-    public static WebDriver getDriver() {
+    public static WebDriver getFirefoxDriver() {
         if (null == driver) {
+
             driver = new FirefoxDriver();
         }
 
         return driver;
     }
+
+    public static WebDriver getChromeDriver() {
+        if (null == driver) {
+
+            driver = new ChromeDriver();
+        }
+
+        return driver;
+    }
+
+
 
     public void setNewDriver(WebDriver driver) {
         this.driver = driver;
