@@ -1,6 +1,7 @@
-package com.nithind.automium;
+package com.nithind.automium.reporters;
 
 
+import com.nithind.automium.AutomiumLog;
 import com.nithind.automium.utils.PropertyConfig;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -76,6 +77,50 @@ public class Reporter {
     }
 
     public static void produceResult() {
+        HtmlReporter.write(getHtmlReport());
+        try {
+            SlackReporter.updateSlack(getSlackReport());
+        } catch (Exception e) {
+            System.out.print("Unable to connect to slack :(. Check proxy configuration");
+        }
+    }
+
+    private static String getSlackReport() {
+        String colorCode = "#36a64f"; //Green success
+        String preText = "All Execution Successful.";
+        String attachmentValue = "All execution successful. Successful testcase count "+successMap.size();
+        if(failureMap.size()>0) {
+            colorCode = "#d00000"; //red failure
+            preText = "GCS Automatiom found some test failures.";
+            attachmentValue = failureMap.size()+" failure(s), " +warningMap.size()+" warning(s). "+successMap.size() +" successful";
+        } else if (warningMap.size()>0) {
+            colorCode = "#edb431"; //amber warning
+            attachmentValue = warningMap.size()+" warning(s), 0 failures. "+successMap.size() +" successful";
+            preText = "GCS Automatiom found some test warnings.";
+        }
+
+        String message = "{\n" +
+                "\"username\":\"Automium\",\n" +
+                "   \"attachments\":[\n" +
+                "      {\n" +
+                "         \"pretext\":\""+preText+"\",\n" +
+                "         \"color\":\""+colorCode+"\",\n" +
+                "         \"fields\":[\n" +
+                "            {\n" +
+                "               \"title\":\"Result\",\n" +
+                "               \"value\":\""+attachmentValue+"\",\n" +
+                "               \"short\":false\n" +
+                "            }\n" +
+                "         ]\n" +
+                "      }\n" +
+                "   ]\n" +
+                "}";
+
+        return message;
+
+    }
+
+    private static String getHtmlReport() {
         VelocityEngine ve = new VelocityEngine();
         //ve.setProperty(RuntimeConstants.FILE_RESOURCE_LOADER_PATH, PropertyConfig.getProperty("velocity.template.path"));
 
@@ -100,8 +145,8 @@ public class Reporter {
         context.put("classLogsString", sb.toString());
         StringWriter writer = new StringWriter();
         t.merge(context, writer);
-        write(writer.toString());
-        System.out.println(writer.toString());
+        return writer.toString();
+
     }
 
     public static void write(String html) {
