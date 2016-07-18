@@ -1,0 +1,5 @@
+/.idea/libraries
+/.idea
+/automium/target
+/*.iml
+/automium/*.iml
