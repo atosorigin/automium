@@ -2,6 +2,7 @@ package com.nithind.automium;
 
 import com.nithind.automium.exceptions.DuplicateIdException;
 import com.nithind.automium.exceptions.PreExecutionException;
+import com.nithind.automium.reporters.Reporter;
 import com.nithind.automium.test.PreReqTestCase;
 import com.nithind.automium.test.XMLTestCase;
 import com.nithind.automium.test.XMLTestCases;

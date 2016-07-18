@@ -79,6 +79,18 @@ public class Reporter {
     public static void produceResult() {
         HtmlReporter.write(getHtmlReport());
         try {
+            String threshhold = PropertyConfig.getProperty("slack.result.post.threshold");
+            if (null == threshhold) {
+                threshhold = "WARN";
+            }
+            if (threshhold.equalsIgnoreCase("FAIL") && !(failureMap.size()>0)) {
+                return;
+            }
+            else if (threshhold.equalsIgnoreCase("WARN")) {
+                if (!((failureMap.size()>0) || (warningMap.size()>0))) {
+                    return;
+                }
+            }
             SlackReporter.updateSlack(getSlackReport());
         } catch (Exception e) {
             System.out.print("Unable to connect to slack :(. Check proxy configuration");
@@ -99,23 +111,62 @@ public class Reporter {
             preText = "GCS Automatiom found some test warnings.";
         }
 
+
+        String failureMessage = "";
+        if (failureMap.size()>0) {
+            failureMessage = failureMessage +"{\n" +
+                    "         \"color\":\"#d00000\",\n" +
+                    "         \"fields\":[\n" +
+                    "            {\n" +
+                    "               \"title\":\"FAILURE\",\n" +
+                    "               \"value\":\""+failureMap.size()+"\",\n" +
+                    "               \"short\":true\n" +
+                    "            }\n" +
+                    "         ]\n" +
+                    "      }";
+        }
+        String warningMessage = "";
+        if (warningMap.size()>0) {
+            if (failureMap.size()>0) {
+                warningMessage = warningMessage + ",";
+            }
+
+            warningMessage= warningMessage+"{\n" +
+                    "         \"color\":\"#edb431\",\n" +
+                    "         \"fields\":[\n" +
+                    "            {\n" +
+                    "               \"title\":\"WARNING\",\n" +
+                    "               \"value\":\""+warningMap.size()+"\",\n" +
+                    "               \"short\":true\n" +
+                    "            }\n" +
+                    "         ]\n" +
+                    "      }";
+        }
+        String successMessage = "";
+        if (successMap.size()>0) {
+            if (failureMap.size()>0 || warningMap.size()>0) {
+                successMessage = successMessage + ",";
+            }
+            successMessage = successMessage + "{\n" +
+                    "         \"color\":\"#36a64f\",\n" +
+                    "         \"fields\":[\n" +
+                    "            {\n" +
+                    "               \"title\":\"SUCCESS\",\n" +
+                    "               \"value\":\""+successMap.size()+"\",\n" +
+                    "               \"short\":true\n" +
+                    "            }\n" +
+                    "         ]\n" +
+                    "      }";
+        }
+
         String message = "{\n" +
-                "\"username\":\"Automium\",\n" +
+                "\"username\":\"GCS Automation Result\",\n" +
                 "   \"attachments\":[\n" +
-                "      {\n" +
-                "         \"pretext\":\""+preText+"\",\n" +
-                "         \"color\":\""+colorCode+"\",\n" +
-                "         \"fields\":[\n" +
-                "            {\n" +
-                "               \"title\":\"Result\",\n" +
-                "               \"value\":\""+attachmentValue+"\",\n" +
-                "               \"short\":false\n" +
-                "            }\n" +
-                "         ]\n" +
-                "      }\n" +
+                "\t  "+failureMessage+"\n" +
+                "\t  "+warningMessage+"\n" +
+                "\t "+successMessage+" \n" +
                 "   ]\n" +
                 "}";
-
         return message;
 
     }
